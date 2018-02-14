@@ -1,20 +1,19 @@
 import React from 'react'
-import parts from '../partData'
+import parts from '../partsData'
 import PartShow from './partShow'
 
-class PartList extends React.Component {
+const PartList = (props) => {
+  console.log(parts)
 
-  // constructor() {
-  //
-  // }
+  const listedPart = parts.map(part => {
+    return <PartShow key={part.id} part={part} />
+  })
 
-  render() {
-    return (
-      <div>
-        <PartShow/>
-      </div>
-    )
-  }
+  return (
+    <div>
+      {listedPart}
+    </div>
+  )
 }
 
 export default PartList

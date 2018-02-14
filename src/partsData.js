@@ -4,11 +4,7 @@ const parts = [
     description: "Part One" ,
     attachments: [
       {
-<<<<<<< HEAD
         name: "part one - attachment one",
-=======
-        name: "part one - attachment one"
->>>>>>> 77f8a438d5b4e01ff020fc5a4e282c866c8494e0
         sizes: [
           {
             '2.25': { price: 10.99 }
@@ -86,4 +82,4 @@ const parts = [
   }
 ]
 
-export {parts}
+export default parts
