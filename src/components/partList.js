@@ -2,10 +2,10 @@ import React from 'react'
 // import parts from '../partsData'
 import PartShow from './partShow'
 
-const PartList = ({parts}) => {
-console.log(parts)
+const PartList = ({parts, handlePart}) => {
+// console.log(parts, handlePart)
   const listedPart = parts.map(part => {
-    return <PartShow key={part.id} part={part} />
+    return <PartShow key={part.id} part={part} value={part.description} handlePart={handlePart}/>
   })
 
   return (
