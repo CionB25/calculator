@@ -1,7 +1,13 @@
 import React from 'react'
 import parts from '../partsData'
-import DataForm from '../components/dataForm'
-import PartList from '../components/partList'
+// import DataForm from '../components/dataForm'
+import SizeForm from '../components/sizeForm'
+import AttachmentForm from '../components/attachmentForm'
+import AddCartButton from '../components/addCartButton'
+// import AddItemButton from '../components/addItemButton'
+import PriceMenu from '../components/priceMenu'
+import PartForm from '../components/partForm'
+import {Form, Container, Grid, Divider} from 'semantic-ui-react'
 
 class CalculatorContainer extends React.Component {
 
@@ -11,39 +17,16 @@ class CalculatorContainer extends React.Component {
     this.state = {
       parts: parts,
       currentPart: {},
-      partInfo: [],
-      attachments: [{
-        description: "",
-        attachments: []
-      }],
       sizes: [],
+      sizeInfo: {},
+      cartItem: {},
       cart: []
     }
   }
 
   hashItOut = (e) => {
-    // const newArray = parts.filter(item => {
-    //     if (item.description === String(e.target.innerHTML)) {
-    //       return item
-    //     }
-    //   })
-    // const  newNew = newArray[0].attachments.map(item => {
-    //     // return {key: item.name, items: item}
-    //     return {key: item.name, text: item.name, value: item.name}
-    //   })
-    //
-    // const current = parts.filter(part => {
-    //   return part.description === String(e.target.innerHTML)
-    // })
-    // console.log(current)
-    //
-    // this.setState({
-    //   partInfo: newNew,
-    //   currentPart: current
-    // })
-
     const part = parts.filter(part => {
-          return part.description === String(e.target.innerHTML)
+          return part.description === String(e.target.innerText)
         })
 
     this.setState({
@@ -54,36 +37,72 @@ class CalculatorContainer extends React.Component {
   handlePart = (e) => {
     e.preventDefault()
     this.hashItOut(e)
-    // console.log(this.state.currentPart);
   }
+
+
 
   handleAttachment = (e) => {
     e.preventDefault()
     const partList = this.state.currentPart[0].attachments
-    const selectedPart = partList.filter(part => {
-      return part.name === String(e.target.innerText)
-    })
-    const sizes = selectedPart[0].sizes
-    console.log(sizes);
-    console.log(sizes[0])
-    this.setState({
-      sizes: sizes
-    })
-    // console.log(e.target.innerText);
+    if (String(e.target.innerText) !== '') {
+        const selectedPart = partList.filter(part => {
+        return part.name === String(e.target.innerText)
+      })
+      const sizes = selectedPart[0].sizes
+      console.log(sizes);
+      console.log(sizes[0])
+      this.setState({
+        sizes: sizes
+      })
+    }
   }
 
+  handleSize = (e) => {
+    e.preventDefault()
+    console.log(String(e.target.innerText))
+    const arr = this.state.sizes
+        console.log(arr);
+    if (String(e.target.innerText) !== '') {
+      const sizeObj = arr.filter(size => {
+        return Object.entries(size).join("").split(",")[0] === String(e.target.innerText)
+      })[0][String(e.target.innerText)]
 
+      this.setState({
+        sizeInfo: sizeObj
+      })
+    }
+  }
 
+  handleAddCart = e => {
+    e.preventDefault()
+    console.log('hi');
+    console.log("price:",this.state.sizeInfo, "sizes:", this.state.sizes, "part:" ,this.state.currentPart);
+  }
 
   render() {
-    // console.log(this.state.partInfo)
     return (
       <div>
-        <PartList parts={this.state.parts} handlePart={this.handlePart}/>
-        <DataForm part={this.state.currentPart} sizes={this.state.sizes} handleAttachment={this.handleAttachment}/>
+        <Container>
+        <Grid>
+          <Grid.Column mobile={16} tablet={8} computer={4}>
+            <Container>
+            <PartForm parts={this.state.parts} handlePart={this.handlePart}/>
+            <AttachmentForm part={this.state.currentPart} handleAttachment={this.handleAttachment}/>
+            <SizeForm sizes={this.state.sizes} handleSize={this.handleSize} />
+
+            </Container>
+            <AddCartButton price={this.state.sizeInfo} handleAddCart={this.handleAddCart}/>
+          </Grid.Column>
+        <Divider horizontal />
+          <Grid.Column mobile={16} tablet={8} computer={4}>
+
+          </Grid.Column>
+        </Grid>
+        </Container>
       </div>
     )
   }
 }
 
 export default CalculatorContainer
+// <PriceMenu price={this.state.sizeInfo}/>
