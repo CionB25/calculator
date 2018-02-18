@@ -5,11 +5,11 @@ const AttachmentForm = ({part,handleAttachment}) => {
 
   let attachmentField
   if (part.length > 0) {
-    // console.log(part[0].attachments)
+
     const options = part[0].attachments.map(part => {
       return {key: part.name, text: part.name, value: part.name}
     })
-    console.log(part[0])
+    
     attachmentField = <Dropdown fluid search selection options={options} placeholder="Select Attachment" onChange={handleAttachment}/>
     // attachmentField = <Form.Select options={options}  />;
   } else {

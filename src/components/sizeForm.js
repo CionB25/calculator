@@ -14,7 +14,6 @@ const SizeForm = ({sizes,handleSize}) => {
       return {key: item, text: item, value: item}
     })
 
-  console.log(options)
     sizeField = <Dropdown fluid search selection options={options} placeholder="Select Size"  onChange={handleSize}/>
   } else {
     sizeField = <Dropdown loading  placeholder="loading..."/>;
