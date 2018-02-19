@@ -31,7 +31,8 @@ class CalculatorContainer extends React.Component {
       },
       currentSize: {
           id: "",
-          sizeNumber: ""
+          sizeNumber: "",
+          price: {}
       }
     }
   }
@@ -78,15 +79,28 @@ class CalculatorContainer extends React.Component {
       const sizeObj = arr.filter(size => {
         return Object.entries(size).join("").split(",")[0] === String(e.target.innerText)
       })[0][String(e.target.innerText)]
-
+      console.log(sizeObj)
       this.setState({
         sizeInfo: sizeObj,
         currentSize: {
           ...this.state.currentSize,
-          name: String(e.target.innerText)
+          sizeNumber: String(e.target.innerText),
+          price: sizeObj
         }
       })
     }
+  }
+
+  addPrice(value,array) {
+    console.log(value, array)
+  }
+
+  clearCart = () => {
+    this.setState({
+      partObj: "",
+      sizes: [],
+      sizeInfo: []
+    })
   }
 
   handleAddCart = e => {
@@ -94,10 +108,11 @@ class CalculatorContainer extends React.Component {
     const item = {part: this.state.currentPart,
       attachment: this.state.currentAttachement,
       size: this.state.currentSize}
-      
+
       this.setState(prevState => ({
       cart: [...this.state.cart, item]
     }))
+    this.clearCart()
   }
 
   render() {

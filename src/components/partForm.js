@@ -11,7 +11,7 @@ const partField = <Dropdown fluid search selection placeholder="Select Part" opt
 
   return (
     <div>
-    <Header>Select Part Option</Header>
+    <Header>Add Item</Header>
       {partField}
     </div>
   )

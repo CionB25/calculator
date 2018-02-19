@@ -9,11 +9,11 @@ const AttachmentForm = ({part,handleAttachment}) => {
     const options = part[0].attachments.map(part => {
       return {key: part.name, text: part.name, value: part.name}
     })
-    
+
     attachmentField = <Dropdown fluid search selection options={options} placeholder="Select Attachment" onChange={handleAttachment}/>
     // attachmentField = <Form.Select options={options}  />;
   } else {
-    attachmentField = <Dropdown loading placeholder="loading..."/>;
+    attachmentField = <Dropdown placeholder="loading..."/>;
   }
 
   return (

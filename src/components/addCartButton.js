@@ -19,9 +19,9 @@ class AddCartButton extends Component {
     let thing
 
       if (this.props['price']['price']) {
-        thing = <Button fluid icon={'add to cart'} content='add to cart' toggle active={active} onClick={this.handleBars}/>
+        thing = <Button fluid icon={'add to cart'} content='add item to cart' color='green' onClick={this.handleBars}/>
       } else {
-        thing = <Button fluid loading/>
+        thing = <Button fluid content='add item' />
       }
 
 
