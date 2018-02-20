@@ -1,12 +1,13 @@
 import React from 'react'
 import DeleteButton from './deleteButton'
-import {compressedArray, filteredArray} from './functions'
-import {Button, Checkbox, Icon, Table, Input, Divider, Label} from 'semantic-ui-react'
+// import {compressedArray, filteredArray} from './functions'
+import {Button, Table, Input,Label} from 'semantic-ui-react'
 
-const Cart = ({cart}) => {
+const Cart = ({cart, deleteCart}) => {
 
-  const carts = compressedArray(cart)
-  const newBiz = filteredArray(cart,carts)
+// class Cart extends React.Component {
+
+  const eh = "BRUH HERE WE IS CHECKFORMEFORTHEONETIMEMAIGAI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
   const handleQty = (e) => {
     e.preventDefault()
@@ -14,31 +15,36 @@ const Cart = ({cart}) => {
     console.log(e.target.value);
     console.log(e.target);
     console.log(e);
-    console.log(newBiz);
+    // console.log(newBiz);
   }
 
   let cartList
-  let dButton = <DeleteButton/>
+  // let dButton = <DeleteButton cart={cart} onClick={deleteCart}/>
 
   if (cart.length > 0) {
-    cartList = newBiz.map(item => {
+console.log(cart)
+      // const carts = compressedArray(cart)
+      // const newBiz = filteredArray(cart,carts)
+// console.lo
+// console.log(carts)
+    cartList = cart.map(item => {
       let i = 0
-    console.log(item)
+    console.log(item.size.id)
     //  return (<Table.Body key={item.attachment} >
     //    <CartItem key={item.attachment} item={item}/>
     //  </Table.Body>)
     return (<Table.Body><Table.Row><Table.Cell collapsing></Table.Cell>
-      <Table.Cell key={item[0].value}><Input type={item[1].value}placeholder={item[1].count} key={item} size='mini'onChange={handleQty} /></Table.Cell>
-      <Table.Cell key={item[0].part.name}>{item[0].part.name}</Table.Cell>
-      <Table.Cell key={item[0].attachment.name}>{item[0].attachment.name}</Table.Cell>
-      <Table.Cell key={item[0].size.name}>{item[0].size.sizeNumber}</Table.Cell>
-      <Table.Cell key={item[0].size.price.price}>${item[0].size.price.price}</Table.Cell>
-      <Table.Cell key={++i}>{dButton}</Table.Cell>
+      <Table.Cell key={item.count}><Input value={"2"} type={item.count}placeholder={item.count} key={item} size='mini'onChange={handleQty} /></Table.Cell>
+      <Table.Cell key={item.part}>{item.part}</Table.Cell>
+      <Table.Cell key={item.attachment}>{item.attachment}</Table.Cell>
+      <Table.Cell key={item.size.measurement}>{item.size.measurement}</Table.Cell>
+      <Table.Cell key={item.size.price}>${item.size.price}</Table.Cell>
+      <Table.Cell key={"2"}><DeleteButton value={eh} item={item.size.id} onClick={deleteCart}/></Table.Cell>
       </Table.Row></Table.Body>)
    })
   }
 
-  // <Table.Cell>{item[1].count}</Table.Cell>
+  // <Table.Cell>{item.count}</Table.Cell>
   // <Table.Cell>{item[0].attachment.name}</Table.Cell>
   // <Table.Cell>{item[0].part.name}</Table.Cell>
   // <Table.Cell>{item[0].size.name}</Table.Cell>
@@ -78,7 +84,7 @@ const Cart = ({cart}) => {
             <Input  fluid placeholder='amt %' size='small'/>
           </Table.HeaderCell>
           <Table.HeaderCell>
-            Labor 
+            Labor
             <Input fluid placeholder="hours"  size='small' />
           </Table.HeaderCell>
           <Table.HeaderCell>
@@ -86,10 +92,20 @@ const Cart = ({cart}) => {
               Place Order
             </Button>
           </Table.HeaderCell>
+          <Table.HeaderCell>
+            <Button fluid icon labelPosition='right' primary size='small' onClick={deleteCart}>
+              Clear Cart
+            </Button>
+          </Table.HeaderCell>
         </Table.Row>
+
       </Table.Footer>
     </Table>
   )
+// console.log(cart.attachment)
+//   return (
+//     <div>"hi"</div>
+//   )
 }
 
 export default Cart

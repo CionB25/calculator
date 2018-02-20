@@ -1,36 +1,38 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Button } from 'semantic-ui-react'
 
-class AddCartButton extends Component {
+// class AddCartButton extends Component {
 
-  state = {}
+  // state = {}
 
+const AddCartButton = ({price, check, handleAddCart}) => {
 
-  handleBars = (e) => {
-      this.props.handleAddCart(e)
-      this.handleClick(e)
+  const handleBars = (e) => {
+      handleAddCart(e)
+      // handleClick(e)
   }
 
-  handleClick = ({sizeInfo,handleAddCart}) => this.setState({ active: !this.state.active })
+  // handleClick = ({sizeInfo,handleAddCart}) => this.setState({ active: !this.state.active })
 
-  render() {
+  // render() {
 
-    const { active } = this.state
+    // const { active } = this.state
     let thing
 
-      if (this.props['price']['price']) {
-        thing = <Button fluid icon={'add to cart'} content='add item to cart' color='green' onClick={this.handleBars}/>
+      if (price) {
+        thing = <Button fluid icon={'add to cart'} content='add item to cart' color='green' onClick={handleBars}/>
       } else {
         thing = <Button fluid content='add item' />
       }
 
 
-    console.log(this.props['price']['price'])
+    console.log(price)
+    console.log(check.sizeNumber);
     return (
       <div>
         {thing}
       </div>
     )
-  }
+  // }
 }
 export default AddCartButton

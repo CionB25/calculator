@@ -5,13 +5,14 @@ const SizeForm = ({sizes,handleSize}) => {
 
   let sizeField
   if (sizes.length > 0) {
-    const arrOfKeys = sizes.map(size => {
-      return Object.keys(size)
-    })
-
-    const keys = arrOfKeys.join().split(",")
-    const options = keys.map(item => {
-      return {key: item, text: item, value: item}
+    console.log(sizes);
+    // const arrOfKeys = sizes.map(size => {
+    //   return Object.keys(size)
+    // })
+    //
+    // const keys = arrOfKeys.join().split(",")
+    const options = sizes.map(item => {
+      return {key: item.measurement, text: item.measurement, value: item.measurement}
     })
 
     sizeField = <Dropdown fluid search selection options={options} placeholder="Select Size"  onChange={handleSize}/>
@@ -25,6 +26,10 @@ const SizeForm = ({sizes,handleSize}) => {
       {sizeField}
     </div>
   )
+  // console.log(sizes)
+  // return (
+  //   <div>"hi"</div>
+  // )
 }
 
 export default SizeForm

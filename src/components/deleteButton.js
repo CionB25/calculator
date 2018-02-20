@@ -1,10 +1,17 @@
 import React from 'react'
-import {Button, Checkbox, Icon, Table, Divider} from 'semantic-ui-react'
+import {Button} from 'semantic-ui-react'
 
 const DeleteButton = ({item}) => {
 
+  const sayHi = (e) => {
+    e.preventDefault()
+    console.log('hi');
+    console.log(Button);
+    console.log(item);
+  }
+
   return (
-    <Button content="delete"/>
+    <Button value={item} content="delete" onClick={sayHi}/>
   )
 }
 
