@@ -2,11 +2,11 @@ import React from 'react'
 import {Header, Dropdown} from 'semantic-ui-react'
 
 const AttachmentForm = ({part,handleAttachment}) => {
-
+console.log(part);
   let attachmentField
   if (part.length > 0) {
-
-    const options = part[0].attachments.map(part => {
+console.log(part)
+    const options = part.map(part => {
       return {key: part.name, text: part.name, value: part.name}
     })
 

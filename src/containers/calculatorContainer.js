@@ -18,12 +18,14 @@ class CalculatorContainer extends React.Component {
     this.state = {
       parts: "",
       partObj: {},
+      attachments: [],
       sizes: [],
       sizeInfo: {},
       cart: [],
       currentPart: {
           id: "",
-          name: ""
+          name: "",
+          attachments: []
         },
       currentAttachement: {
         id: "",
@@ -40,7 +42,7 @@ class CalculatorContainer extends React.Component {
   componentDidMount() {
     return fetchParts()
     .then(res => {
-      console.log(res)
+      // console.log(res)
       this.setState({
         partObj: res
       })
@@ -53,29 +55,36 @@ class CalculatorContainer extends React.Component {
     const thisPart = current.filter(part => {
         return part.description === String(e.target.innerText)
       })
-console.log(thisPart)
-    this.setState({
-      currentPart: {
-        ...this.state.currentPart,
-        id: thisPart[0].id,
-        name: thisPart[0].description
-      }
-    })
+// console.log(thisPart)
+    if (String(e.target.innerText) !== '') {
+      this.setState({
+        currentPart: {
+          ...this.state.currentPart,
+          id: thisPart[0].id,
+          name: thisPart[0].description,
+          attachments: thisPart[0].attachments
+        }
+      })
+    }
   }
 
 
 
   handleAttachment = (e) => {
     e.preventDefault()
-    const partList = this.state.partObj[0].attachments
+    const partList = this.state.currentPart.attachments
+    // console.log(this.state.partObj[0].attachments)
+    // console.log(this.state.currentPart.attachments);
     if (String(e.target.innerText) !== '') {
+      // console.log(partList);
         const selectedPart = partList.filter(part => {
         return part.name === String(e.target.innerText)
       })
       const search = selectedPart[0].id
+      // console.log(selectedPart)
       return fetchAttachments(search)
       .then(res => {
-        console.log(selectedPart)
+        // console.log(selectedPart)
         this.setState({
           sizes: res.sizes,
           currentAttachement: {
@@ -113,20 +122,26 @@ console.log(thisPart)
   }
 
   addPrice(value,array) {
-    console.log(value, array)
+    // console.log(value, array)
   }
 
   clearCart = () => {
     this.setState({
-      sizes: [],
-      sizeInfo: []
+      currentPart: {
+        ...this.state.currentPart,
+        attachments: []
+      },
+      currentSize: {
+          ...this.state.currentSize,
+          sizeNumber: ""
+      },
+      sizes: []
     })
   }
 
 
   handleDeleteCart = (e) => {
     e.preventDefault()
-    console.log('nah')
     this.setState({
       cart: []
     })
@@ -145,14 +160,45 @@ console.log(thisPart)
         this.setState(prevState => ({
         cart: [...this.state.cart, res]
         }))
-        console.log(this.state.cart)
+        // console.log(this.state.cart)
       })
 
     this.clearCart()
   }
 
+  handleDeleteItemFromCart = (e) => {
+    e.preventDefault()
+    const sizes = this.state.cart
+    // console.log(this.state.cart.part);
+    // console.log(this.currentAttachement);
+    // console.log(sizes.part)
+    // console.log(sizes.size.id);
+
+    // console.log(e.target);
+    // const gucci = (sizes) => {
+    //   return sizes.filter(eh => {
+    //     return sizes.size.id!== e.target.value
+    //   })
+    // }
+    const gucci = sizes.filter(eh => {
+      // console.log(eh.size.id)
+      // console.log(e.target.value);
+          return parseInt(eh.size.id) !== parseInt(e.target.value)
+      })
+    // console.log(gucci(sizes))
+    // this.setState({
+    //   cart: gucci
+    // })
+    // console.log(this.state.cart)
+    // console.log(gucci);
+    this.setState({
+      cart: gucci
+    })
+    // console.log(this.state.cart);
+  }
+
   render() {
-    console.log(this.state.cart);
+    // console.log(this.state.partObj);
     return (
       <div>
         <Container>
@@ -160,7 +206,7 @@ console.log(thisPart)
           <Grid.Column mobile={16} tablet={8} computer={4}>
             <Container>
             <PartForm parts={this.state.partObj} handlePart={this.handlePart}/>
-            <AttachmentForm part={this.state.partObj} handleAttachment={this.handleAttachment}/>
+            <AttachmentForm part={this.state.currentPart.attachments} handleAttachment={this.handleAttachment}/>
             <SizeForm sizes={this.state.sizes} handleSize={this.handleSize} />
 
             </Container>
@@ -168,7 +214,7 @@ console.log(thisPart)
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={4}>
-            <Cart cart={this.state.cart} deleteCart={this.handleDeleteCart}/>
+            <Cart cart={this.state.cart} deleteCart={this.handleDeleteCart} deleteItem={this.handleDeleteItemFromCart}/>
           </Grid.Column>
         </Grid>
         </Container>
