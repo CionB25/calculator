@@ -20,7 +20,7 @@ if (parts.length > 0) {
 
   return (
     <div>
-    <Header>Add Item</Header>
+    <Header>Add / Edit Item</Header>
       {partField}
     </div>
   )
