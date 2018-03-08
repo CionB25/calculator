@@ -125,10 +125,6 @@ class CalculatorContainer extends React.Component {
     }
   }
 
-  addPrice(value,array) {
-    // console.log(value, array)
-  }
-
   clearCart = () => {
     this.setState({
       currentPart: {
@@ -163,46 +159,31 @@ class CalculatorContainer extends React.Component {
       .then( res => {
         this.setState(prevState => ({
         cart: [...this.state.cart, res]
-        }))
+      }),function () {
+        this.handleTotal()
+      })
         // console.log(this.state.cart)
       })
-    this.handleTotal()
     this.clearCart()
   }
 
   handleDeleteItemFromCart = (e) => {
     e.preventDefault()
     const sizes = this.state.cart
-    // console.log(this.state.cart.part);
-    // console.log(this.currentAttachement);
-    // console.log(sizes.part)
-    // console.log(sizes.size.id);
 
-    // console.log(e.target);
-    // const gucci = (sizes) => {
-    //   return sizes.filter(eh => {
-    //     return sizes.size.id!== e.target.value
-    //   })
-    // }
     const gucci = sizes.filter(eh => {
-      // console.log(eh.size.id)
-      // console.log(e.target.value);
+
           return parseInt(eh.size.id) !== parseInt(e.target.value)
       })
-    // console.log(gucci(sizes))
-    // this.setState({
-    //   cart: gucci
-    // })
-    // console.log(this.state.cart)
-    // console.log(gucci);
+
     this.setState({
       cart: gucci
     })
-    // console.log(this.state.cart);
+
   }
 
   handleTotal = () => {
-    console.log("BOOOOOOOOOOOOY");
+    // console.log("BOOOOOOOOOOOOY");
     const cart = this.state.cart
 
     const priceArr = cart.map(price => {
@@ -217,62 +198,35 @@ class CalculatorContainer extends React.Component {
     //
     const two = Math.round(thing *100)/100
 
-    // const newBiz = String(two)
+    this.setState(prevState => ({total: String(two)}), function () {console.log(this.state)})
 
-    // this.updateTotal(two)
-    //
-    // this.setState({
-    //   total: String(two)
-    // })
-
-    // this.setState((prevState, props) => {
-    // this.setState(function(prevState, props) {
-    //   console.log("HOOOOOOOOOOOOMYGAAAAAAAAHDDDDDDDDDDDDDD");
-    //   console.log(prevState);
-    //   console.log(props);
-    //   // console.log(props)
-    //   total: newBiz
-    // })
-    // console.log(this.state.total);
-
-    this.setState(prevState => ({total: String(two)}))
-
-    // this.setState((prevState, props) => ({
-    //   count: prevState.count + props.increment
-    // }));
-    //
-    // total = String(two)
-    // console.log(cart);
-    // console.log("HOOOOOOOOOOOOMYGAAAAAAAAHD");
   }
 
 
-  // updateTotal = (delta) => {
-  //   console.log("Previous State:",previousState);
-  //   console.log("Current Props:",currentProps);
-  //   return  (previousState, currentProps) => {
-  //
-  //       return { ...previousState, total: delta };
-  //   };
-  //   console.log(this.state.total);
-  // }
 
-//   function incrementFooBy(delta) {
-//     return (previousState, currentProps) => {
-//         return { ...previousState, foo: previousState.foo + delta };
-//     };
-// }
-// class MyComponent extends React.Component {
-//     onClick = () => {
-//         this.setState(incrementFooBy(42));
-//     }
-//     render() {
-//         return <button onClick={onClick}>click me</button>;
-//     }
-// }
+  updateTotal = (number) => {
+    const num = parseFloat(number)
+    const total = parseFloat(this.state.total)
+    console.log(num);
+    console.log(total);
+    const set = Math.round((num * total) * 100)/100
+    console.log(set);
+
+    this.setState({
+      total: set
+    })
+
+
+
+
+
+
+    // console.log(num)
+    // console.log("BOOOOOOOOOOOOY");
+    // console.log(this.state.total);
+  }
 
   render() {
-    console.log(this.state.partObj);
     return (
       <div>
         <Container>
@@ -291,7 +245,7 @@ class CalculatorContainer extends React.Component {
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={4}>
-            <Cart cart={this.state.cart} deleteCart={this.handleDeleteCart} deleteItem={this.handleDeleteItemFromCart} total={this.state.total}/>
+            <Cart cart={this.state.cart} deleteCart={this.handleDeleteCart} deleteItem={this.handleDeleteItemFromCart} total={this.state.total} updateTotal={this.updateTotal}/>
           </Grid.Column>
 
         </Grid>

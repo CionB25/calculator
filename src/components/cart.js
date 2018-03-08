@@ -11,7 +11,7 @@ class Cart extends React.Component {
     super(props)
 
     this.state = {
-      qty: '',
+      qty: {},
       labor: '',
       discount: ''
     }
@@ -50,11 +50,12 @@ class Cart extends React.Component {
   // }
 
 
-  handleQty = (e) => {
+  handleQty = (id)=>(e) => {
     e.preventDefault()
-    console.log(e.target.value)
+    console.log(this.props.total);
+    this.props.updateTotal(e.target.value)
     this.setState({
-      qty: e.target.value
+      qty: {[id]: e.target.value}
     })
   }
 
@@ -62,7 +63,7 @@ class Cart extends React.Component {
     e.preventDefault()
     console.log(e.target.value)
     console.log(this.props.handleTotalDiscount)
-    this.props.handleTotalDiscount
+    // this.props.handleTotalDiscount
     this.setState({
       discount: e.target.value
     })
@@ -88,6 +89,7 @@ class Cart extends React.Component {
     const total = this.props.total
     const deleteCart = this.props.deleteCart
     const deleteItem = this.props.deleteItem
+
 
 
 
@@ -124,7 +126,7 @@ class Cart extends React.Component {
       //    <CartItem key={item.attachment} item={item}/>
       //  </Table.Body>)
       return (<Table.Body><Table.Row><Table.Cell collapsing></Table.Cell>
-        <Table.Cell key={item.count} collapsing><Input value={this.state.qty} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty} collapsing/></Table.Cell>
+        <Table.Cell key={item.count} collapsing><Input value={this.state.qty[item.size.id]} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty(item.size.id)} collapsing/></Table.Cell>
         <Table.Cell key={item.part}>{item.part}</Table.Cell>
         <Table.Cell key={item.attachment}>{item.attachment}</Table.Cell>
         <Table.Cell key={item.size.measurement}>{item.size.measurement}</Table.Cell>
@@ -163,7 +165,7 @@ class Cart extends React.Component {
             </Table.HeaderCell>
             <Table.HeaderCell>
               Discount
-              <Input value={this.state.discount} onChange={this.handleDiscount, this.props.handleTotalDiscount} type="number" fluid placeholder='amt %' size='small'/>
+              <Input value={this.state.discount} onChange={this.handleDiscount} type="number" fluid placeholder='amt %' size='small'/>
             </Table.HeaderCell>
             <Table.HeaderCell>
               Labor
