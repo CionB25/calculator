@@ -206,7 +206,7 @@ class CalculatorContainer extends React.Component {
 
   updateTotal = (number) => {
     const num = parseFloat(number)
-    const total = parseFloat(this.state.total)
+    const total = parseFloat(this.state.total) 
     console.log(num);
     console.log(total);
     const set = Math.round((num * total) * 100)/100
