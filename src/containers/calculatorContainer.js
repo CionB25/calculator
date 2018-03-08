@@ -8,7 +8,10 @@ import AddCartButton from '../components/addCartButton'
 // import PriceMenu from '../components/priceMenu'
 import {fetchParts, fetchCarts, fetchAttachments} from '../components/functions'
 import PartForm from '../components/partForm'
+import PriceReg from '../components/priceReg'
+import Total from '../components/total'
 import {Container, Grid} from 'semantic-ui-react'
+import {Route} from 'react-router-dom'
 
 class CalculatorContainer extends React.Component {
 
@@ -22,6 +25,7 @@ class CalculatorContainer extends React.Component {
       sizes: [],
       sizeInfo: {},
       cart: [],
+      total: "",
       currentPart: {
           id: "",
           name: "",
@@ -121,10 +125,6 @@ class CalculatorContainer extends React.Component {
     }
   }
 
-  addPrice(value,array) {
-    // console.log(value, array)
-  }
-
   clearCart = () => {
     this.setState({
       currentPart: {
@@ -159,49 +159,80 @@ class CalculatorContainer extends React.Component {
       .then( res => {
         this.setState(prevState => ({
         cart: [...this.state.cart, res]
-        }))
+      }),function () {
+        this.handleTotal()
+      })
         // console.log(this.state.cart)
       })
-
     this.clearCart()
   }
 
   handleDeleteItemFromCart = (e) => {
     e.preventDefault()
     const sizes = this.state.cart
-    // console.log(this.state.cart.part);
-    // console.log(this.currentAttachement);
-    // console.log(sizes.part)
-    // console.log(sizes.size.id);
 
-    // console.log(e.target);
-    // const gucci = (sizes) => {
-    //   return sizes.filter(eh => {
-    //     return sizes.size.id!== e.target.value
-    //   })
-    // }
     const gucci = sizes.filter(eh => {
-      // console.log(eh.size.id)
-      // console.log(e.target.value);
+
           return parseInt(eh.size.id) !== parseInt(e.target.value)
       })
-    // console.log(gucci(sizes))
-    // this.setState({
-    //   cart: gucci
-    // })
-    // console.log(this.state.cart)
-    // console.log(gucci);
+
     this.setState({
       cart: gucci
     })
-    // console.log(this.state.cart);
+
+  }
+
+  handleTotal = () => {
+    // console.log("BOOOOOOOOOOOOY");
+    const cart = this.state.cart
+
+    const priceArr = cart.map(price => {
+      return Object.values(price)[3]['price']
+    })
+
+    const priceFloats = priceArr.map(price => {
+      return parseFloat(price)
+    })
+
+    const thing = priceFloats.reduce((a,b) => a + b, 0)
+    //
+    const two = Math.round(thing *100)/100
+
+    this.setState(prevState => ({total: String(two)}), function () {console.log(this.state)})
+
+  }
+
+
+
+  updateTotal = (number) => {
+    const num = parseFloat(number)
+    const total = parseFloat(this.state.total)
+    console.log(num);
+    console.log(total);
+    const set = Math.round((num * total) * 100)/100
+    console.log(set);
+
+    this.setState({
+      total: set
+    })
+
+
+
+
+
+
+    // console.log(num)
+    // console.log("BOOOOOOOOOOOOY");
+    // console.log(this.state.total);
   }
 
   render() {
-    // console.log(this.state.partObj);
     return (
       <div>
         <Container>
+
+
+
         <Grid>
           <Grid.Column mobile={16} tablet={8} computer={4}>
             <Container>
@@ -214,8 +245,23 @@ class CalculatorContainer extends React.Component {
           </Grid.Column>
 
           <Grid.Column mobile={16} tablet={8} computer={4}>
-            <Cart cart={this.state.cart} deleteCart={this.handleDeleteCart} deleteItem={this.handleDeleteItemFromCart}/>
+            <Cart cart={this.state.cart} deleteCart={this.handleDeleteCart} deleteItem={this.handleDeleteItemFromCart} total={this.state.total} updateTotal={this.updateTotal}/>
           </Grid.Column>
+
+        </Grid>
+
+
+        <Grid>
+        <Grid.Column mobile={16} tablet={8} computer={4}>
+
+          <PriceReg parts={this.state.partObj} handlePart={this.handlePart}
+          part={this.state.currentPart.attachments} handleAttachment={this.handleAttachment}
+          sizes={this.state.sizes} handleSize={this.handleSize}
+          partSelected={this.state.currentPart.name}
+          attachment={this.state.currentAttachement.name}
+          size={this.state.currentSize}/>
+
+        </Grid.Column>
         </Grid>
         </Container>
       </div>
@@ -224,4 +270,13 @@ class CalculatorContainer extends React.Component {
 }
 
 export default CalculatorContainer
-// <PriceMenu price={this.state.sizeInfo}/>
+
+// <Grid>
+//   <Total
+//   parts={this.state.partObj} handlePart={this.handlePart}
+//   part={this.state.currentPart.attachments} handleAttachment={this.handleAttachment}
+//   SizeForm sizes={this.state.sizes} handleSize={this.handleSize}
+//   price={this.state.sizeInfo} check={this.state.currentSize} handleAddCart={this.handleAddCart}
+//   cart={this.state.cart} deleteCart={this.handleDeleteCart} deleteItem={this.handleDeleteItemFromCart}
+//   />
+// </Grid>

@@ -6,7 +6,7 @@ import { Button } from 'semantic-ui-react'
   // state = {}
 
 const AddCartButton = ({price, check, handleAddCart}) => {
-
+console.log(check);
   const handleBars = (e) => {
       handleAddCart(e)
       // handleClick(e)
@@ -19,15 +19,15 @@ const AddCartButton = ({price, check, handleAddCart}) => {
     // const { active } = this.state
     let thing
 
-      if (check.sizeNumber) {
+      if (check.id) {
+        console.log(check)
         thing = <Button fluid icon={'add to cart'} content='add item to cart' color='green' onClick={handleBars}/>
       } else {
         thing = <Button fluid content='add item' />
       }
 
 
-    console.log(price.price)
-    console.log(check.sizeNumber);
+
     return (
       <div>
         {thing}

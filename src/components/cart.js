@@ -11,25 +11,59 @@ class Cart extends React.Component {
     super(props)
 
     this.state = {
-      qty: '',
+      qty: {},
       labor: '',
-      discount: '',
-      total: ''
+      discount: ''
     }
   }
 
+  // componentDidMount() {
+  //
+  //   const cart = this.props.cart
+  //
+  //     if (cart.length > 0) {
+  //
+  //     console.log(cart)
+  //
+  //     const priceArr = cart.map(price => {
+  //       return Object.values(price)[3]['price']
+  //     })
+  //
+  //     const priceFloats = priceArr.map(price => {
+  //       return parseFloat(price)
+  //     })
+  //
+  //     // let  thing = String(priceFloats.reduce((a,b) => a + b, 0))
+  //
+  //     const thing = priceFloats.reduce((a,b) => a + b, 0)
+  //
+  //     const two = Math.round(thing *100)/100
+  //
+  //     const now = String(two)
+  //
+  //
+  //
+  //       this.props.whenLoaded
+  //     }
+  //     console.log(this.props.cart);
+  //     console.log(this.props.whenLoaded);
+  // }
 
-  handleQty = (e) => {
+
+  handleQty = (id)=>(e) => {
     e.preventDefault()
-    console.log(e.target.value)
+    console.log(this.props.total);
+    this.props.updateTotal(e.target.value)
     this.setState({
-      qty: e.target.value
+      qty: {[id]: e.target.value}
     })
   }
 
   handleDiscount = (e) => {
     e.preventDefault()
     console.log(e.target.value)
+    console.log(this.props.handleTotalDiscount)
+    // this.props.handleTotalDiscount
     this.setState({
       discount: e.target.value
     })
@@ -52,28 +86,38 @@ class Cart extends React.Component {
   render() {
 
     const cart = this.props.cart
+    const total = this.props.total
     const deleteCart = this.props.deleteCart
     const deleteItem = this.props.deleteItem
 
 
 
+
     let cartList
-    let total
+    // let total
 
     if (cart.length > 0) {
-    console.log(cart)
 
-    const priceArr = cart.map(price => {
-      return Object.values(price)[3]['price']
-    })
+    // console.log(cart)
 
-    const priceFloats = priceArr.map(price => {
-      return parseFloat(price)
-    })
+    // const priceArr = cart.map(price => {
+    //   return Object.values(price)[3]['price']
+    // })
+    //
+    // const priceFloats = priceArr.map(price => {
+    //   return parseFloat(price)
+    // })
+    //
+    // const thing = priceFloats.reduce((a,b) => a + b, 0)
+    // //
+    // const two = Math.round(thing *100)/100
+    // //
+    // total = String(two)
+      // total = String(priceFloats.reduce((a,b) => a + b, 0))
 
-     total = String(priceFloats.reduce((a,b) => a + b, 0))
 
-    console.log(total)
+    //
+    // console.log(total)
 
       cartList = cart.map(item => {
 
@@ -82,7 +126,7 @@ class Cart extends React.Component {
       //    <CartItem key={item.attachment} item={item}/>
       //  </Table.Body>)
       return (<Table.Body><Table.Row><Table.Cell collapsing></Table.Cell>
-        <Table.Cell key={item.count}><Input value={this.state.qty} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty} /></Table.Cell>
+        <Table.Cell key={item.count} collapsing><Input value={this.state.qty[item.size.id]} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty(item.size.id)} collapsing/></Table.Cell>
         <Table.Cell key={item.part}>{item.part}</Table.Cell>
         <Table.Cell key={item.attachment}>{item.attachment}</Table.Cell>
         <Table.Cell key={item.size.measurement}>{item.size.measurement}</Table.Cell>
@@ -114,10 +158,9 @@ class Cart extends React.Component {
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='2'>
-              <Label size="large">
-                Total Price:
-                <Label.Detail>${total}</Label.Detail>
-              </Label>
+            <Button span col icon labelPosition='right' primary size='small'>
+              Invoice
+            </Button>
 
             </Table.HeaderCell>
             <Table.HeaderCell>
@@ -129,12 +172,14 @@ class Cart extends React.Component {
               <Input value={this.state.labor} onChange={this.handleLabor} type="number" fluid placeholder="hours"  size='small' />
             </Table.HeaderCell>
             <Table.HeaderCell>
-              <Button fluid icon labelPosition='right' primary size='small'>
-                Place Order
-              </Button>
+
+              <Label fluid size="large">
+                Total:
+                <Label.Detail>${total}</Label.Detail>
+              </Label>
             </Table.HeaderCell>
             <Table.HeaderCell>
-              <Button fluid icon labelPosition='right' primary size='small' onClick={deleteCart}>
+              <Button fluid col={1} icon labelPosition='right' primary size='small' onClick={deleteCart}>
                 Clear Cart
               </Button>
             </Table.HeaderCell>
