@@ -55,7 +55,6 @@ export const fetchParts = () => {
   // .then(res => console.log(res))
 }
 export const fetchAttachments = (thing) => {
-  let body = JSON.stringify(thing)
   return fetch(url + "attachments/" + `${thing}`)
   .then(res => res.json())
 }

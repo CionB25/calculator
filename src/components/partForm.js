@@ -1,5 +1,4 @@
 import React from 'react'
-// import {hashItUp} from './functions'
 import {Header,Dropdown} from 'semantic-ui-react'
 
 const PartForm = ({parts,handlePart}) => {

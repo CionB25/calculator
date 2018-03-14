@@ -5,12 +5,7 @@ const SizeForm = ({sizes,handleSize}) => {
 
   let sizeField
   if (sizes.length > 0) {
-    console.log(sizes);
-    // const arrOfKeys = sizes.map(size => {
-    //   return Object.keys(size)
-    // })
-    //
-    // const keys = arrOfKeys.join().split(",")
+
     const options = sizes.map(item => {
       return {key: item.measurement, text: item.measurement, value: item.measurement}
     })
@@ -26,10 +21,6 @@ const SizeForm = ({sizes,handleSize}) => {
       {sizeField}
     </div>
   )
-  // console.log(sizes)
-  // return (
-  //   <div>"hi"</div>
-  // )
 }
 
 export default SizeForm
