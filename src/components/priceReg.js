@@ -6,13 +6,14 @@ import ModPage from './modPage'
 import {Grid, Form, Divider} from 'semantic-ui-react'
 
 const PriceReg = (props) => {
-console.log(props)
+
   const  part = props.partSelected
   const  attachment = props.attachment
   const  size = props.size
   return (
     <Grid>
       <Form>
+      <h3>Edit Price</h3>
         <PartForm parts={props.parts} handlePart={props.handlePart}/>
         <AttachmentForm part={props.part} handleAttachment={props.handleAttachment}/>
         <SizeForm sizes={props.sizes} handleSize={props.handleSize}/>

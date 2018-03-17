@@ -1,5 +1,6 @@
 import React from 'react'
 import DeleteButton from './deleteButton'
+import InvoiceCreated from './invoiceCreated'
 // import {compressedArray, filteredArray} from './functions'
 import {Button, Table, Input,Label} from 'semantic-ui-react'
 
@@ -116,9 +117,7 @@ class Cart extends React.Component {
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='1'>
-            <Button span col icon labelPosition='right' primary size='small'>
-              Invoice
-            </Button>
+            <InvoiceCreated deleteCart={this.props.deleteCart}/>
 
             </Table.HeaderCell>
 
