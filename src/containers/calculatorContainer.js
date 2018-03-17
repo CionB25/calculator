@@ -218,6 +218,7 @@ class CalculatorContainer extends React.Component {
         <Grid>
           <Grid.Column mobile={16} tablet={8} computer={4}>
             <Container>
+            <h3>Add / Edit Item</h3>
             <PartForm parts={this.state.partObj} handlePart={this.handlePart}/>
             <AttachmentForm part={this.state.currentPart.attachments} handleAttachment={this.handleAttachment}/>
             <SizeForm sizes={this.state.sizes} handleSize={this.handleSize} />
@@ -236,13 +237,17 @@ class CalculatorContainer extends React.Component {
 
         <Grid>
         <Grid.Column mobile={16} tablet={8} computer={4}>
+          <Container>
 
-          <PriceReg parts={this.state.partObj} handlePart={this.handlePart}
-          part={this.state.currentPart.attachments} handleAttachment={this.handleAttachment}
-          sizes={this.state.sizes} handleSize={this.handleSize}
-          partSelected={this.state.currentPart.name}
-          attachment={this.state.currentAttachement.name}
-          size={this.state.currentSize}/>
+          <Route path="/admin" render={(props) => {
+            return <PriceReg {...props} parts={this.state.partObj} handlePart={this.handlePart}
+            part={this.state.currentPart.attachments} handleAttachment={this.handleAttachment}
+            sizes={this.state.sizes} handleSize={this.handleSize}
+            partSelected={this.state.currentPart.name}
+            attachment={this.state.currentAttachement.name}
+            size={this.state.currentSize}/>
+          }} />
+          </Container>
 
         </Grid.Column>
         </Grid>

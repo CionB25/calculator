@@ -10,7 +10,7 @@ const AddCartButton = ({price, check, handleAddCart}) => {
     let thing
 
       if (check.id) {
-        thing = <Button fluid icon={'add to cart'} content='add item to cart' color='green' onClick={handleCart}/>
+        thing = <Button fluid icon={'add to cart'} content='add item to cart'  onClick={handleCart}/>
       } else {
         thing = <Button fluid content='add item' />
       }
