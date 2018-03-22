@@ -1,17 +1,13 @@
 import React from 'react'
 import {Button} from 'semantic-ui-react'
 
-const DeleteButton = ({item}) => {
+const DeleteButton = (props) => {
 
-  const sayHi = (e) => {
-    e.preventDefault()
-    console.log('hi');
-    console.log(Button);
-    console.log(item);
-  }
+const deleteItem  = props.deleteItem
+const itemID = props.item
 
   return (
-    <Button value={item} content="delete" onClick={sayHi}/>
+    <Button  content="delete" value={itemID} onClick={deleteItem}/>
   )
 }
 

@@ -1,5 +1,4 @@
 import React from 'react'
-// import {hashItUp} from './functions'
 import {Header,Dropdown} from 'semantic-ui-react'
 
 const PartForm = ({parts,handlePart}) => {
@@ -20,7 +19,6 @@ if (parts.length > 0) {
 
   return (
     <div>
-    <Header>Add Item</Header>
       {partField}
     </div>
   )
