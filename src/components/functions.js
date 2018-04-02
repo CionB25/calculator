@@ -41,7 +41,6 @@ export const filteredArray = (arr1, arr2) => {
         return filtered.push(tableObj)
       }
     })
-    // filtered.push(arr2[i]['value'])
   }
   return filtered
 }
@@ -49,7 +48,6 @@ export const filteredArray = (arr1, arr2) => {
 export const fetchParts = () => {
   return fetch(url + 'parts')
   .then(res => res.json())
-  // .then(res => console.log(res))
 }
 export const fetchAttachments = (thing) => {
   return fetch(url + "attachments/" + `${thing}`)
