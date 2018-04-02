@@ -1,6 +1,6 @@
 import React from 'react'
 import PriceUpdate from './priceUpdate'
-import { Button, Header, Input, Modal, Icon } from 'semantic-ui-react'
+import { Button, Header, Input, Modal} from 'semantic-ui-react'
 
 const ModPage = (props) => {
 

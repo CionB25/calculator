@@ -157,7 +157,7 @@ class CalculatorContainer extends React.Component {
 
     const gucci = sizes.filter(eh => {
 
-          return parseInt(eh.size.id) !== parseInt(e.target.value)
+          return parseInt(eh.size.id, 10) !== parseInt(e.target.value,10)
       })
 
     this.setState({

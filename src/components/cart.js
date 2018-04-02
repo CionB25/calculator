@@ -74,7 +74,7 @@ class Cart extends React.Component {
         console.log(num);
         // console.log(parseInt(String(num).slice(0, -1).join("")));
         // console.log()
-            const tens = parseInt((String(num).split("").slice(0, -1).join("")))
+            const tens = parseInt((String(num).split("").slice(0, -1).join("")),10)
             // const tens = parseInt(arr.slice(0,-1).join(""))
             const newPrice = price / tens
             console.log(tens);
@@ -82,10 +82,7 @@ class Cart extends React.Component {
             return num * newPrice
       } else {
         // console.log(String(num).split(""))
-        const ones = parseInt(String(num).split("")[0])
-        console.log(price);
-        console.log(ones);
-        console.log(price);
+        const ones = parseInt(String(num).split("")[0], 10)
         const newPrice = price / ones
         return num * newPrice
       }
@@ -112,7 +109,7 @@ class Cart extends React.Component {
     const index = cartItem[0].id
     const itemCheck = cartItem[0].item
 
-    newItem = {count: parseInt(e.target.value),
+    newItem = {count: parseInt(e.target.value, 10),
       part: itemCheck.part, attachment: itemCheck.attachment,
       size: {id: itemCheck.size.id, measurement: itemCheck.size.measurement,
       price: String(this.updateCart(e.target.value, itemCheck).toFixed(2)),
