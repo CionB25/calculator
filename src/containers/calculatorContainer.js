@@ -44,7 +44,7 @@ class CalculatorContainer extends React.Component {
     .then(res => {
       this.setState({
         partObj: res
-      })
+      },console.log(res[0]))
     })
   }
 
@@ -63,7 +63,7 @@ class CalculatorContainer extends React.Component {
           name: thisPart[0].description,
           attachments: thisPart[0].attachments
         }
-      })
+      },console.log(this.state.currentPart))
     }
   }
 
@@ -166,28 +166,24 @@ class CalculatorContainer extends React.Component {
   }
 
   handleTotal = () => {
-    const cart = this.state.cart
+    const almostTotal = this.state.cart
+      .map(price => Object.values(price)[3]['price'])
+      .map(parseFloat)
+      .reduce((a,b) => a + b, 0)
 
-    const priceArr = cart.map(price => {
-      return Object.values(price)[3]['price']
-    })
+    const total = Math.round(almostTotal *100)/100
 
-    const priceFloats = priceArr.map(price => {
-      return parseFloat(price)
-    })
-
-    const thing = priceFloats.reduce((a,b) => a + b, 0)
-
-    const two = Math.round(thing *100)/100
-
-    this.setState(prevState => ({total: String(two)}))
+    this.setState(prevState => ({total: String(total)}))
 
   }
 
   calculateLabor = (amount, total) => {
-    const num = parseFloat(amount)
-    const multi = parseFloat(total)
-    const newTotal = (num + multi).toFixed(2)
+
+    const newTotal = [amount, total]
+      .filter(item => typeof item === 'string')
+      .map(parseFloat)
+      .reduce((a,b) => a + b, 0)
+      .toFixed(2)
 
     this.setState({
       total: newTotal
@@ -201,10 +197,11 @@ class CalculatorContainer extends React.Component {
     const percent = 100 - num
     const newTotal = (multi * (percent / 100)).toFixed(2)
 
-    this.calculateLabor(labor, newTotal)
+    this.calculateLabor(labor, num? newTotal : total)
   }
 
   cartState = (array) => {
+    console.log(array);
     this.setState({
       cart: array
     }, this.handleTotal)

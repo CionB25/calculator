@@ -1,7 +1,4 @@
 const url = "http://localhost:3000/"
-// let body
-// let headers = {'Content-Type':'application/json','Accept':'application/json'}
-// let config = {method:"POST",body:body,headers:headers}
 
 export const compressedArray = (thing) => {
   let original = thing.map(item => {
@@ -74,13 +71,6 @@ export const fetchCarts = (item) => {
   .then(res => res.json())
 }
 
-// export const updateCount = (item) => {
-//   let body = {count: e.target.value}
-//   let headers = {'Content-Type':'application/json','Accept':'application/json'}
-//   let config = {method:"POST",body:body,headers:headers}
-//
-//   return fetch(url + 'carts' + '')
-// }
 
 export const hashItUp = (arr) => {
   arr.map(part => {

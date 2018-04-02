@@ -14,13 +14,82 @@ class Cart extends React.Component {
     this.state = {
       qty: {},
       labor: '',
-      discount: ''
+      discount: '',
+      ogLabor: '',
+      ogDiscount: '',
+      ogQty: ''
     }
   }
 
   updateCart = (num, item) => {
     const price = parseFloat(item.size.price)
-    return num * price
+    console.log(num);
+    console.log(price);
+    // SET THIS BIZ AS NUMBERS AND FIGURE OUT HOW TO ACCESS ONES & TENS. SET PRICES IN THE ITEM OBJECT. KEEP TRACK OF THE PREVIOUS NUMBER.
+    // return num * price
+
+    // switch (num) {
+    //   case (num > 10)
+    // }
+    //
+    // if (num > 10) {
+    //   console.log(String(num).split(""))
+    //   const ones = parseInt(String(num).split("")[1])
+    //   console.log(ones);
+    //   console.log(price);
+    //   const newPrice = price / ones
+    //   return num * newPrice
+    // } else if (num > 100) {
+    //   const tens = parseInt(String(num).slice(0, -1).join(""))
+    //   const tens = parseInt(arr.slice(0,-1).join(""))
+    //   const newPrice = price / tens
+    //   console.log(tens);
+    //   console.log(price);
+    //   return num * newPrice
+    // } else if  {
+    //   return num * price
+    // }
+
+    if (num < 10) {
+      return num * price
+    // } else if (num >= 10){
+    //   if (num >= 100) {
+    //     const tens = parseInt(String(num).slice(0, -1).join(""))
+    //     // const tens = parseInt(arr.slice(0,-1).join(""))
+    //     const newPrice = price / tens
+    //     console.log(tens);
+    //     console.log(price);
+    //     return num * newPrice
+    //   } else {
+    //     // console.log(String(num).split(""))
+    //     const ones = parseInt(String(num).split("")[1])
+    //     // console.log(ones);
+    //     // console.log(price);
+    //     const newPrice = price / ones
+    //     return num * newPrice
+    //   }
+  } else if (num >= 10) {
+      if (num >= 100) {
+        console.log("eh");
+        console.log(num);
+        // console.log(parseInt(String(num).slice(0, -1).join("")));
+        // console.log()
+            const tens = parseInt((String(num).split("").slice(0, -1).join("")))
+            // const tens = parseInt(arr.slice(0,-1).join(""))
+            const newPrice = price / tens
+            console.log(tens);
+            console.log(price);
+            return num * newPrice
+      } else {
+        // console.log(String(num).split(""))
+        const ones = parseInt(String(num).split("")[0])
+        console.log(price);
+        console.log(ones);
+        console.log(price);
+        const newPrice = price / ones
+        return num * newPrice
+      }
+    }
   }
 
   newThing = () => {
@@ -43,7 +112,11 @@ class Cart extends React.Component {
     const index = cartItem[0].id
     const itemCheck = cartItem[0].item
 
-    newItem = {count: parseInt(e.target.value), part: itemCheck.part, attachment: itemCheck.attachment, size: {id: itemCheck.size.id, measurement: itemCheck.size.measurement, price: String(this.updateCart(e.target.value, itemCheck).toFixed(2)), created_at: itemCheck.size.created_at, updated_at: itemCheck.size.updated_at} }
+    newItem = {count: parseInt(e.target.value),
+      part: itemCheck.part, attachment: itemCheck.attachment,
+      size: {id: itemCheck.size.id, measurement: itemCheck.size.measurement,
+      price: String(this.updateCart(e.target.value, itemCheck).toFixed(2)),
+      created_at: itemCheck.size.created_at, updated_at: itemCheck.size.updated_at} }
 
     const arrayOne = cart.slice(0,index)
     const arrayTwo = cart.slice((index + 1))
@@ -51,7 +124,8 @@ class Cart extends React.Component {
     const newCartItem = [...arrayOne, newItem, ...arrayTwo]
 
     this.setState({
-      qty: {[id]: e.target.value}
+      qty: {[id]: e.target.value},
+      ogQty: {[id]: e.target.value}
     }, this.props.cartState(newCartItem))
   }
 
@@ -61,7 +135,8 @@ class Cart extends React.Component {
     // this.props.handleTotalDiscount
     // this.props.updateDiscount(e.target.value)
     this.setState({
-      discount: e.target.value
+      discount: e.target.value,
+      ogDiscount: e.target.value
     })
   }
 
@@ -70,7 +145,8 @@ class Cart extends React.Component {
     // console.log(e.target.value)
     // this.props.updateLabor(e.target.value)
     this.setState({
-      labor: e.target.value
+      labor: e.target.value,
+      ogLabor: e.target.value
     })
   }
 
@@ -87,12 +163,12 @@ class Cart extends React.Component {
       cartList = cart.map(item => {
 
       return (<Table.Body><Table.Row><Table.Cell collapsing></Table.Cell>
-        <Table.Cell key={item.count} collapsing><Input value={this.state.qty[item.size.id]} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty(item.size.id)} collapsing/></Table.Cell>
-        <Table.Cell key={item.part}>{item.part}</Table.Cell>
-        <Table.Cell key={item.attachment}>{item.attachment}</Table.Cell>
-        <Table.Cell key={item.size.measurement}>{item.size.measurement}</Table.Cell>
-        <Table.Cell key={item.size.price}>${item.size.price}</Table.Cell>
-        <Table.Cell key={"2"}><DeleteButton cart={cart} value={item.size.id} item={item.size.id} deleteItem={deleteItem}/></Table.Cell>
+        <Table.Cell key={item.size.id + 10000} collapsing><Input value={this.state.qty[item.size.id]} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty(item.size.id)} collapsing/></Table.Cell>
+        <Table.Cell key={item.size.id + 20000}>{item.part}</Table.Cell>
+        <Table.Cell key={item.size.id + 30000}>{item.attachment}</Table.Cell>
+        <Table.Cell key={item.size.id + 40000}>{item.size.measurement}</Table.Cell>
+        <Table.Cell key={item.size.id + 50000}>${item.size.price}</Table.Cell>
+        <Table.Cell key={item.size.id + 60000}><DeleteButton cart={cart} value={item.size.id} item={item.size.id} deleteItem={deleteItem}/></Table.Cell>
         </Table.Row></Table.Body>)
      })
     }

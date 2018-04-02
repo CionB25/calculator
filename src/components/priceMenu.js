@@ -17,7 +17,7 @@ let cost
         <Icon name='usd'/>
       </Label>
       <Label>
-      {cost}
+        {cost}
       </Label>
       <Label position="left">
         <Label.Detail>Add To Cart</Label.Detail>
