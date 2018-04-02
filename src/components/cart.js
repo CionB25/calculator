@@ -162,8 +162,8 @@ class Cart extends React.Component {
     if (cart.length > 0) {
       cartList = cart.map(item => {
 
-      return (<Table.Body><Table.Row><Table.Cell collapsing></Table.Cell>
-        <Table.Cell key={item.size.id + 10000} collapsing><Input value={this.state.qty[item.size.id]} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty(item.size.id)} collapsing/></Table.Cell>
+      return (<Table.Body key={item.size.id + 70000}><Table.Row key={item.size.id + 80000}><Table.Cell></Table.Cell>
+        <Table.Cell key={item.size.id + 10000}><Input value={this.state.qty[item.size.id]} type='number' placeholder={item.count} key={item} size='mini'onChange={this.handleQty(item.size.id)}/></Table.Cell>
         <Table.Cell key={item.size.id + 20000}>{item.part}</Table.Cell>
         <Table.Cell key={item.size.id + 30000}>{item.attachment}</Table.Cell>
         <Table.Cell key={item.size.id + 40000}>{item.size.measurement}</Table.Cell>
